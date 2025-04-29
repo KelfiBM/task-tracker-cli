@@ -1,0 +1,20 @@
+{
+  "name": "task-tracker-cli",
+  "version": "1.0.0",
+  "description": "Task Tracker CLI",
+  "homepage": "https://github.com/KelfiBM/task-tracker-cli#readme",
+  "bugs": {
+    "url": "https://github.com/KelfiBM/task-tracker-cli/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KelfiBM/task-tracker-cli.git"
+  },
+  "license": "ISC",
+  "author": "Kelfi Batista",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
