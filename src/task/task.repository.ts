@@ -21,7 +21,7 @@ export class TaskRepository {
 
   async updateTask(id: number, task: Partial<Task>) {
     const tasks = await SourceDriver.read<Task>(sourceName);
-    const taskIndex = tasks.findIndex((t) => t.id === task.id);
+    const taskIndex = tasks.findIndex(() => id === task.id);
 
     if (taskIndex === -1) {
       throw new Error(`Task with id ${task.id} not found`);
@@ -36,6 +36,7 @@ export class TaskRepository {
 
     await SourceDriver.update(sourceName, tasks);
   }
+
   async getAllTasks(filter?: Partial<Task>): Promise<Task[]> {
     const tasks = await SourceDriver.read<Task>(sourceName);
     if (!filter) {

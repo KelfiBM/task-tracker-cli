@@ -11,7 +11,7 @@ export class SourceDriver {
     try {
       const data = await fs.readFile(filePath, 'utf-8');
       return JSON.parse(data) as SourceType[];
-    } catch (error) {
+    } catch (error: any) {
       if (error.code === 'ENOENT') {
         return [];
       }
