@@ -19,22 +19,34 @@ export class TaskRepository {
     SourceDriver.update(sourceName, updatedTasks);
   }
 
-  async updateTask(id: number, task: Partial<Task>) {
+  async updateTask(id: number, taskPartial: Partial<Task>) {
     const tasks = await SourceDriver.read<Task>(sourceName);
-    const taskIndex = tasks.findIndex(() => id === task.id);
+    const taskIndex = tasks.findIndex((task) => id === task.id);
 
     if (taskIndex === -1) {
-      throw new Error(`Task with id ${task.id} not found`);
+      throw new Error(`Task with id ${id} not found`);
     }
 
     const currentTask = tasks[taskIndex];
 
-    currentTask.description = task.description || currentTask.description;
-    currentTask.status = task.status || currentTask.status;
+    currentTask.description =
+      taskPartial.description || currentTask.description;
+    currentTask.status = taskPartial.status || currentTask.status;
 
     tasks[taskIndex] = currentTask;
 
     await SourceDriver.update(sourceName, tasks);
+  }
+
+  async getTaskById(id: number): Promise<Task> {
+    const tasks = await SourceDriver.read<Task>(sourceName);
+    const taskIndex = tasks.findIndex((task) => id === task.id);
+
+    if (taskIndex === -1) {
+      throw new Error(`Task with id ${id} not found`);
+    }
+
+    return tasks[taskIndex];
   }
 
   async getAllTasks(filter?: Partial<Task>): Promise<Task[]> {

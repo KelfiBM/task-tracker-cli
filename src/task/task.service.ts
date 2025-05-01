@@ -39,4 +39,8 @@ export class TaskService {
   async getTasksByStatus(status: TaskStatus): Promise<Task[]> {
     return await this.taskRepository.getAllTasks({ status });
   }
+
+  async getTaskById(id: number): Promise<Task> {
+    return await this.taskRepository.getTaskById(id);
+  }
 }
