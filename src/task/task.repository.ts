@@ -10,7 +10,7 @@ export class TaskRepository {
     task.id = newId;
     task.createdAt = new Date();
     tasks.push(task);
-    SourceDriver.update(sourceName, tasks);
+    await SourceDriver.update(sourceName, tasks);
     return newId;
   }
 

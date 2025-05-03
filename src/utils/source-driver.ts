@@ -36,14 +36,20 @@ export class SourceDriver {
 
   static async generateId(sourceName: string): Promise<number> {
     const filePath = PathBuilder.dataPath(sourceIdFileName);
+    let sourceIds: any;
     try {
-      const file = await fs.open(filePath, 'w+');
-      const data = await file.readFile({ encoding: 'utf-8' });
-      const sourceIds = JSON.parse(data) as Record<string, number>;
+      const data = await fs.readFile(filePath, {
+        encoding: 'utf-8',
+      });
+      sourceIds = JSON.parse(data) as Record<string, number>;
+    } catch (error) {
+      sourceIds = {};
+    }
+
+    try {
       const sourceId = sourceIds[sourceName] || 1;
       sourceIds[sourceName] = sourceId + 1;
-      await file.writeFile(JSON.stringify(sourceIds, null, 2), 'utf-8');
-      await file.close();
+      await fs.writeFile(filePath, JSON.stringify(sourceIds, null, 2), 'utf-8');
       return sourceId;
     } catch (error) {
       console.error(`Error reading file: ${filePath}`, error);
