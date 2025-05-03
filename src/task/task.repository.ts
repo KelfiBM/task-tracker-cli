@@ -8,6 +8,7 @@ export class TaskRepository {
     const tasks = await SourceDriver.read<Task>(sourceName);
     const newId = await SourceDriver.generateId(sourceName);
     task.id = newId;
+    task.createdAt = new Date();
     tasks.push(task);
     SourceDriver.update(sourceName, tasks);
     return newId;
@@ -32,6 +33,8 @@ export class TaskRepository {
     currentTask.description =
       taskPartial.description || currentTask.description;
     currentTask.status = taskPartial.status || currentTask.status;
+
+    currentTask.updatedAt = new Date();
 
     tasks[taskIndex] = currentTask;
 

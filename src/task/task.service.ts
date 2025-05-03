@@ -8,7 +8,7 @@ export class TaskService {
   async addTask(description: string): Promise<number> {
     const task = new Task();
     task.description = description;
-    task.status = TaskStatus.ToDo;
+    task.status = TaskStatus.Todo;
     return await this.taskRepository.addTask(task);
   }
 
@@ -20,15 +20,9 @@ export class TaskService {
     return await this.taskRepository.deleteTask(id);
   }
 
-  async setInProgress(id: number): Promise<void> {
+  async updateStatus(id: number, status: TaskStatus) {
     return await this.taskRepository.updateTask(id, {
-      status: TaskStatus.InProgress,
-    });
-  }
-
-  async setDone(id: number): Promise<void> {
-    return await this.taskRepository.updateTask(id, {
-      status: TaskStatus.Done,
+      status: status,
     });
   }
 
