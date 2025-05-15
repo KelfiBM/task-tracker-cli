@@ -1,6 +1,8 @@
 # Task Tracker CLI
 
-Task Tracker built in Node.js from scratch for practice purposes
+A Task Tracker built in Node.js from scratch for practice purposes.
+
+Requirements found in https://roadmap.sh/projects/task-tracker
 
 ## Installation
 
