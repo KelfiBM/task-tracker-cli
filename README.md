@@ -2,11 +2,21 @@
 
 Task Tracker built in Node.js from scratch for practice purposes
 
+## Installation
+
+- Open a Terminal in the main project's folder. (Where the package.json is stored)
+- run: `npm install -g`
+- Start using it by running the available commands
+
+##
+- Open a Terminal in the main project's folder. (Where the package.json is stored)
+- run: `npm uninstall -g`
+
 ## Usages
 
 The Task Tracker allows you to:
 
-- Add, Update, and Delete tasks
+- Add, update, and delete tasks
 - Mark a task as in progress or done
 - List all tasks
 - List all tasks that are done
@@ -21,6 +31,7 @@ The Task Tracker allows you to:
 - task-cli mark-in-progress \<id>
 - task-cli mark-done \<id>
 - task-cli list [todo | in-progress | done]
+- task-cli help
 
 ## Example
 
@@ -42,7 +53,7 @@ The Task Tracker allows you to:
 # Listing all tasks
 > task-cli list
 
-# Listing all task filtered by status
+# Listing all tasks filtered by status
 > task-cli list done
 > task-cli list todo
 > task-cli list in-progress
