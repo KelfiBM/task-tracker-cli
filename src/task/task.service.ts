@@ -26,7 +26,7 @@ export class TaskService {
     });
   }
 
-  async getAllTasks(): Promise<Task[]> {
+  async getTasks(): Promise<Task[]> {
     return await this.taskRepository.getAllTasks();
   }
 

@@ -16,6 +16,8 @@ export class TaskRepository {
 
   async deleteTask(id: number): Promise<void> {
     const tasks = await SourceDriver.read<Task>(sourceName);
+    if (tasks.length == 0) return;
+
     const updatedTasks = tasks.filter((task) => task.id !== id);
     SourceDriver.update(sourceName, updatedTasks);
   }

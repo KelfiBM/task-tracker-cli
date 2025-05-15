@@ -2,25 +2,31 @@ import { Command } from '../core/command';
 import { Task } from '../task/task.entity';
 import { TaskStatus } from '../task/task-status.enum';
 import { TaskService } from '../task/task.service';
-import { ArgumentException } from '../errors/argument.exception';
+import { Validator } from '../validation/validator';
 
 export class ListCommand implements Command {
-  constructor(private readonly taskService: TaskService) {}
+  constructor(
+    private readonly taskService: TaskService,
+    private readonly validator: Validator
+  ) {}
   name: string = 'list';
   description: string = 'list [done|todo|in-progress]';
 
   async run(args: string[]): Promise<void> {
     const status = args.shift()?.toLowerCase();
 
+    this.validator
+      .validate(status, '[status]')
+      .isOptional()
+      .isEnum(TaskStatus)
+      .run();
+
     let tasks: Task[];
 
     if (!status) {
-      tasks = await this.taskService.getAllTasks();
-    } else if ((Object.values(TaskStatus) as string[]).includes(status)) {
-      const taskStatus = status as TaskStatus;
-      tasks = await this.taskService.getTasksByStatus(taskStatus);
+      tasks = await this.taskService.getTasks();
     } else {
-      throw new ArgumentException('[done|todo|in-progress]');
+      tasks = await this.taskService.getTasksByStatus(status as TaskStatus);
     }
 
     if (tasks.length == 0) {
@@ -28,9 +34,9 @@ export class ListCommand implements Command {
       return;
     }
 
-    console.log('Id\tStatus\tDescription');
+    console.log('Id\tStatus\t\tDescription');
     for (const task of tasks) {
-      console.log(`${task.id}\t${task.status}\t${task.description}`);
+      console.log(`${task.id}\t${task.status}\t\t${task.description}`);
     }
   }
 }

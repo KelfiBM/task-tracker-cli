@@ -9,21 +9,22 @@ import {
   UpdateCommand,
 } from './commands/commands';
 import { Command } from './core/command';
+import { Validator } from './validation/validator';
 
 export class Orchestrator {
   defaultCommand: Command;
   availableCommands: Command[];
 
-  constructor(private taskService: TaskService) {
+  constructor(private taskService: TaskService, private validator: Validator) {
     this.defaultCommand = new HelpCommand(() => this.availableCommands);
     this.availableCommands = [
       this.defaultCommand,
-      new AddCommand(this.taskService),
-      new UpdateCommand(this.taskService),
-      new DeleteCommand(this.taskService),
-      new MarkInProgressCommand(this.taskService),
-      new MarkDoneCommand(this.taskService),
-      new ListCommand(this.taskService),
+      new AddCommand(this.taskService, this.validator),
+      new UpdateCommand(this.taskService, this.validator),
+      new DeleteCommand(this.taskService, this.validator),
+      new MarkInProgressCommand(this.taskService, this.validator),
+      new MarkDoneCommand(this.taskService, this.validator),
+      new ListCommand(this.taskService, this.validator),
     ];
   }
 
@@ -44,8 +45,8 @@ export class Orchestrator {
 
     try {
       await command.run(args);
-    } catch (error) {
-      console.error(error);
+    } catch (error: any) {
+      console.error(error.message ?? error);
     }
   }
 }
